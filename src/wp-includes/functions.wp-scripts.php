@@ -278,7 +278,6 @@ function wp_deregister_script( $handle ) {
 		$not_allowed = array(
 			'jquery',
 			'jquery-core',
-			'jquery-migrate',
 			'jquery-ui-core',
 			'jquery-ui-accordion',
 			'jquery-ui-autocomplete',

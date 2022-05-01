@@ -16,12 +16,10 @@ class Tests_Dependencies_jQuery extends WP_UnitTestCase {
 		if ( SCRIPT_DEBUG ) {
 			$jquery_scripts = array(
 				'jquery-core'    => '/wp-includes/js/jquery/jquery.js',
-				'jquery-migrate' => '/wp-includes/js/jquery/jquery-migrate.js',
 			);
 		} else {
 			$jquery_scripts = array(
 				'jquery-core'    => '/wp-includes/js/jquery/jquery.min.js',
-				'jquery-migrate' => '/wp-includes/js/jquery/jquery-migrate.min.js',
 			);
 		}
 
@@ -52,7 +50,6 @@ class Tests_Dependencies_jQuery extends WP_UnitTestCase {
 		$libraries = array(
 			'jquery',
 			'jquery-core',
-			'jquery-migrate',
 			'jquery-ui-core',
 			'jquery-ui-accordion',
 			'jquery-ui-autocomplete',
@@ -107,9 +104,8 @@ class Tests_Dependencies_jQuery extends WP_UnitTestCase {
 	 */
 	public function test_jquery_in_footer() {
 		$scripts = new WP_Scripts;
-		$scripts->add( 'jquery', false, array( 'jquery-core', 'jquery-migrate' ) );
+		$scripts->add( 'jquery', false, array( 'jquery-core' ) );
 		$scripts->add( 'jquery-core', '/jquery.js', array() );
-		$scripts->add( 'jquery-migrate', '/jquery-migrate.js', array() );
 
 		$scripts->enqueue( 'jquery' );
 
@@ -125,14 +121,10 @@ class Tests_Dependencies_jQuery extends WP_UnitTestCase {
 		$scripts->do_items( false, 0 );
 		$this->assertNotContains( 'jquery', $scripts->done );
 		$this->assertNotContains( 'jquery-core', $scripts->done, 'jquery-core should be in footer but is in head' );
-		$this->assertNotContains( 'jquery-migrate', $scripts->done, 'jquery-migrate should be in footer but is in head' );
 
 		$scripts->do_items( false, 1 );
 		$this->assertContains( 'jquery', $scripts->done );
 
-		// The following test is disabled in WP 5.5 as jQuery 1.12.4 is loaded without jQuery Migrate 1.4.1,
-		// and reenabled in 5.6 when jQuery 3.5.1 is loaded with Migrate 3.3.1.
 		$this->assertContains( 'jquery-core', $scripts->done, 'jquery-core in footer' );
-		$this->assertContains( 'jquery-migrate', $scripts->done, 'jquery-migrate in footer' );
 	}
 }

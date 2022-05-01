@@ -476,24 +476,6 @@ final class WP_Customize_Manager {
 	}
 
 	/**
-	 * Returns the Ajax wp_die() handler if it's a customized request.
-	 *
-	 * @since 3.4.0
-	 * @deprecated 4.7.0
-	 *
-	 * @return callable Die handler.
-	 */
-	public function wp_die_handler() {
-		_deprecated_function( __METHOD__, '4.7.0' );
-
-		if ( $this->doing_ajax() || isset( $_POST['customized'] ) ) {
-			return '_ajax_wp_die_handler';
-		}
-
-		return '_default_wp_die_handler';
-	}
-
-	/**
 	 * Starts preview and customize theme.
 	 *
 	 * Check if customize query variable exist. Init filters to filter the active theme.
