@@ -6,7 +6,6 @@ services:
   # The web server container.
   ##
   wordpress-develop:
-    image: nginx:alpine
 
     networks:
       - wpdevnet
@@ -26,6 +25,9 @@ services:
 
     depends_on:
       - php
+    build:
+      context: .
+      dockerfile: develop.gitpod.Dockerfile
 
   ##
   # The PHP container.
@@ -48,6 +50,8 @@ services:
 
     depends_on:
       - mysql
+    user: 33333:33333
+
 
   ##
   # The MySQL container.
@@ -75,7 +79,6 @@ services:
   # The WP CLI container.
   ##
   cli:
-    image: wordpressdevelop/cli:${LOCAL_PHP-latest}
 
     networks:
       - wpdevnet
@@ -91,6 +94,10 @@ services:
 
     # The init directive ensures the command runs with a PID > 1, so Ctrl+C works correctly.
     init: true
+    build:
+      context: .
+      dockerfile: cli.gitpod.Dockerfile
+
 
 volumes:
   # So that sites aren't wiped every time containers are restarted, MySQL uses a persistent volume.
